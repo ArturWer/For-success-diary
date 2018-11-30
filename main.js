@@ -1,10 +1,14 @@
-let section = document.querySelector("section");
+let section = document.querySelector(".text");
 let choosedMonth = document.getElementById('month');
 let listMonth = document.querySelectorAll("select option");
+let radio = document.querySelector(".radio");
 let today = new Date();
-let monthNow = today.getMonth();
+let monthNowNum = today.getMonth();
 let yearNow = today.getFullYear();
-monthNow = listMonth[monthNow].value;
+let monthNow = listMonth[monthNowNum].value;
+/* set this month as firth in options */
+listMonth[monthNowNum].setAttribute("selected", true);
+
 console.log(`monthNow ${monthNow} yearNow ${yearNow}`);
 function fillText(month){
 	section.innerHTML = "";
@@ -28,5 +32,10 @@ choosedMonth.addEventListener("change", function () {
 	let month = this.selectedIndex;
 	console.log(listMonth[month].value);
 	fillText(listMonth[month].value);
-})
+});
+radio.addEventListener("check", function (e) {
+	let radio2 = document.querySelector('input[name="firstMonth"]');
+	console.log(e);
+});
+
 fillText(monthNow);
