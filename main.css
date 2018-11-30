@@ -1,0 +1,12 @@
+body{
+	font: 1em Helvetica;
+	margin: 0;
+	padding: 0;
+}
+form{
+	text-align: center;
+	padding: 10px;
+	background-color: black;
+	color: white;
+	font-size: 1.3rem;
+}
