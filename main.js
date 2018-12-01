@@ -1,18 +1,21 @@
-let section = document.querySelector(".text");
 let choosedMonth = document.getElementById('month');
 let listMonth = document.querySelectorAll("select option");
 let radio = document.querySelector(".radio");
+let textSection = document.querySelector(".text");
+
 let today = new Date();
 let monthNowNum = today.getMonth();
+let monthNameNow = listMonth[monthNowNum].value;
 let yearNow = today.getFullYear();
-let monthNow = listMonth[monthNowNum].value;
+let monthForPrint = monthNameNow;
+let yearForPrint = yearNow;
 /* set this month as firth in options */
 listMonth[monthNowNum].setAttribute("selected", true);
 
-console.log(`monthNow ${monthNow} yearNow ${yearNow}`);
-function fillText(month){
-	section.innerHTML = "";
-	let monthAndYear = ` ${month} ${yearNow}`;
+console.log(`monthNameNow is ${monthNameNow}. yearNow is ${yearNow}`);
+function fillText(month, year){
+	textSection.innerHTML = "";
+	let monthAndYear = ` ${month} ${year}`;
 	let maxDay = 31;
 	if (month === "April" || month === "June" || month === "September" || month === "November") maxDay= 30;
 	else if (month === "February") maxDay = 28;
@@ -24,18 +27,29 @@ function fillText(month){
 			ol.appendChild(li);
 		}
 		h3.textContent=`${i} ${monthAndYear}`;
-		section.appendChild(h3);
-		section.appendChild(ol);
+		textSection.appendChild(h3);
+		textSection.appendChild(ol);
 	};
 }
 choosedMonth.addEventListener("change", function () {
-	let month = this.selectedIndex;
-	console.log(listMonth[month].value);
-	fillText(listMonth[month].value);
+	let monthIndex = this.selectedIndex;
+	console.log(listMonth[monthIndex].value);
+	fillText(listMonth[monthIndex].value, yearForPrint);
 });
-radio.addEventListener("check", function (e) {
-	let radio2 = document.querySelector('input[name="firstMonth"]');
-	console.log(e);
+radio.addEventListener("change", function (e) {
+	let startMonthRadio = e.target.value;
+	if (startMonthRadio === "next") {
+		monthForPrint = Number(choosedMonth.selectedIndex + 1);
+		if (monthForPrint>=12) {
+			monthForPrint -= 12; 
+			yearForPrint = yearNow + 1;
+		}
+		console.log(monthForPrint);
+	} else if (startMonthRadio === "this") {
+		monthForPrint = monthNowNum;
+		yearForPrint = yearNow;
+	}
+	fillText (listMonth[monthForPrint].value, yearForPrint);
 });
 
-fillText(monthNow);
+fillText(monthForPrint, yearNow);
