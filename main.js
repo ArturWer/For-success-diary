@@ -1,6 +1,7 @@
 let choosedMonth = document.getElementById('month');
 let listMonth = document.querySelectorAll("select option");
 let radio = document.querySelector(".radio");
+let btn = document.querySelector(".copyToClipboard");
 let textSection = document.querySelector(".text");
 
 let today = new Date();
@@ -24,6 +25,7 @@ function fillText(month, year){
 		let ol = document.createElement("ol");
 		for (var j = 0; j <= 3; j++) {
 			let li = document.createElement("li");
+			li.textContent = " ";
 			ol.appendChild(li);
 		}
 		h3.textContent=`${i} ${monthAndYear}`;
@@ -50,6 +52,15 @@ radio.addEventListener("change", function (e) {
 		yearForPrint = yearNow;
 	}
 	fillText (listMonth[monthForPrint].value, yearForPrint);
+});
+btn.addEventListener("click", function(e){
+	e.preventDefault();
+   let range = document.createRange();
+   referenceNode = document.querySelector(".text");
+   range.selectNodeContents(referenceNode);
+   range.style.backgroundColor = 'blue';
+   console.log(referenceNode);
+
 });
 
 fillText(monthForPrint, yearNow);
